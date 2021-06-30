@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -38,20 +39,19 @@ const CheckedCell = styled.div`
   height: 100%;
 `;
 
-const Pixel = ({x, y}) => {
-  const [status, setStatus] = useState('white');
-
+const Pixel = ({ status, x, y }) => {
+  const dispatch = useDispatch();
   const onClick = () => {
     switch(status) {
       case 'white':
-        setStatus('black');
+        dispatch({ type: "SET", payload: { position:{ x, y }, cellState: 'black'} });
         return;
       case 'black':
-        setStatus('checked');
+        dispatch({ type: "SET", payload: { position:{ x, y }, cellState: 'checked'} });
         return;
       case 'checked':
       default:
-        setStatus('white');
+        dispatch({ type: "SET", payload: { position:{ x, y }, cellState: 'white'} });
     }
   };
 

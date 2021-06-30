@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 import Pixel from '../Pixel';
 
@@ -17,6 +18,8 @@ const Cell = styled.div`
 const StyledTable = styled.table`
   width: 50px;
   height: 50px;
+  
+  border: 1px solid black;
   border-spacing: 0;
   border-collapse: collapse;
   td {
@@ -29,7 +32,14 @@ const Index = styled.th`
   // font-size: 4px;
 `;
 
-const Table = ({size, xHints, yHints}) => {  
+const Table = ({size, xHints, yHints}) => {
+  const { table } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: "INIT", payload: { size: { x: size, y: size }}});
+  }, []);
+
   const getIndexArray = (s) =>  Array.from({length: s}, (_, index) => index);
   const array = getIndexArray(size);
   
@@ -74,7 +84,7 @@ const Table = ({size, xHints, yHints}) => {
                 return (
                   <td key={y}>
                     <Cell>
-                      <Pixel x={x} y={y} />
+                      <Pixel x={x} y={y} status={table.length > 0 && table[x][y]}/>
                     </Cell>
                   </td>
                 );

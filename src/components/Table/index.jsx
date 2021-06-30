@@ -34,13 +34,7 @@ const Index = styled.th`
 
 const Table = ({size, xHints, yHints}) => {
   const { table } = useSelector((state) => state);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({ type: "INIT", payload: { size: { x: size, y: size }}});
-  }, []);
-
-  const getIndexArray = (s) =>  Array.from({length: s}, (_, index) => index);
+  const getIndexArray = (s) => s ? Array.from({length: s}, (_, index) => index) : [];
   const array = getIndexArray(size);
   
   const xHintMaxLength = xHints && xHints.reduce((a,b) => Math.max(a.length || a, b.length || b));
@@ -84,7 +78,7 @@ const Table = ({size, xHints, yHints}) => {
                 return (
                   <td key={y}>
                     <Cell>
-                      <Pixel x={x} y={y} status={table.length > 0 && table[x][y]}/>
+                      <Pixel x={x} y={y} status={table && table[x][y]}/>
                     </Cell>
                   </td>
                 );

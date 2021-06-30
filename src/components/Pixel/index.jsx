@@ -44,14 +44,14 @@ const Pixel = ({ status, x, y }) => {
   const onClick = () => {
     switch(status) {
       case 'white':
-        dispatch({ type: "SET", payload: { position:{ x, y }, cellState: 'black'} });
+        dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'black'} });
         return;
       case 'black':
-        dispatch({ type: "SET", payload: { position:{ x, y }, cellState: 'checked'} });
+        dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'checked'} });
         return;
       case 'checked':
       default:
-        dispatch({ type: "SET", payload: { position:{ x, y }, cellState: 'white'} });
+        dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'white'} });
     }
   };
 

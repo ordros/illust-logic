@@ -8,8 +8,8 @@ const getHintFromString = (strHint) => {
 
 const getHintsFromString = (str) => {
   const arr = str.split('/');
-  const sizeX = arr[0];
-  const sizeY = arr[1];
+  const sizeX = parseInt(arr[0]);
+  const sizeY = parseInt(arr[1]);
   const hintsX = getHintFromString(arr[2]);
   const hintsY = getHintFromString(arr[3]);
   

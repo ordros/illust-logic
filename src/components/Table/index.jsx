@@ -4,9 +4,8 @@ import styled, { css } from 'styled-components';
 import Pixel from '../Pixel';
 
 const Cell = styled.div`
-  width: 25px;
-  height: 25px;
-  border: 1px solid black;
+  width: 40px;
+  height: 40px;
   border-collapse: collapse;
   font-size: 20px;
   display: flex;
@@ -28,8 +27,24 @@ const StyledTable = styled.table`
   }
 `;
 
+const FrameBorder = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-collapse: collapse;
+`;
+
 const Index = styled.th`
-  font-size: 4px;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const Spacer = styled.div`
+  width: 20px;
+  height: 20px;
 `;
 
 const Table = ({size, xHints, yHints}) => {
@@ -41,10 +56,12 @@ const Table = ({size, xHints, yHints}) => {
   const yHintMaxLength = yHints && yHints.reduce((a,b) => Math.max(a.length || a, b.length || b));
   const maxHintsLength = Math.max(xHintMaxLength, yHintMaxLength);
   
+  const getFrame = (number) => { return <Cell><FrameBorder>{number}</FrameBorder></Cell> };
   return (
     <StyledTable cellSpacing='0'>
       <thead>
         <tr>
+          <Index><Spacer/></Index>
           {getIndexArray(xHintMaxLength).map((v) => <th key={v}></th>)}
           {array.map((v) => <Index key={v}>{v}</Index>)}
         </tr>
@@ -54,8 +71,9 @@ const Table = ({size, xHints, yHints}) => {
           getIndexArray(maxHintsLength).map((yHintX) => {
             return (
               <tr key={yHintX}>
-                {getIndexArray(xHintMaxLength).map((v) => <td key={v}><Cell /></td>)}
-                {getIndexArray(size).map((yHinty) => <td key={yHinty}><Cell>{yHints[yHinty][yHintX] || ''}</Cell></td>)}
+                <Index as="td" />
+                {getIndexArray(xHintMaxLength).map((v) => <td key={v}>{getFrame()}</td>)}
+                {getIndexArray(size).map((yHinty) => <td key={yHinty}>{getFrame(yHints[yHinty][yHintX] || '')}</td>)}
               </tr>
             );
           })
@@ -63,13 +81,12 @@ const Table = ({size, xHints, yHints}) => {
         {array.map((x) => {
           return (
             <tr key={x}>
+              <Index as="td" key={x}>{x}</Index>
               {
                 getIndexArray(xHintMaxLength).map((xHintx) => {
                   return (
                     <td key={xHintx}>
-                      <Cell isTop={x === 0}>
-                        {xHints[x][xHintx] || ''}
-                      </Cell>
+                      {getFrame(xHints[x][xHintx] || '')}
                     </td>
                   );
                 })

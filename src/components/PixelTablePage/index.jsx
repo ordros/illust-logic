@@ -5,23 +5,22 @@ import styled from "styled-components";
 import createHintsFromBoard from "../../utils/createHintsFromBoard";
 import createStringFromHint from "../../utils/createStringFromHint";
 import getHintsFromString from "../../utils/getHintsFromString";
-import PixelTable from "../PixelTable";
+import Table from "../Table";
 
 const Wrapper = styled.div`
   display: flex;
 `;
 
 const PixelTablePage = () => {
-  const { table, hints, mode } = useSelector((state) => state);
+  const { size, table, hints, mode } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const size = 15;
 
   const location = useLocation();
 
   const createStringHints = () => {
     const xStringHint = createStringFromHint(hints.x);
     const yStringHint = createStringFromHint(hints.y);
-    const hintString = `${size}/${size}/${xStringHint}/${yStringHint}`;
+    const hintString = `${size.x}/${size.y}/${xStringHint}/${yStringHint}`;
     console.log(hintString);
   };
 
@@ -30,9 +29,10 @@ const PixelTablePage = () => {
   `;
 
   const setInitalData = () => {
+    const initSize = 10;
     if (!location.search) {
-      dispatch({ type: "INIT", payload: { size: { x: size, y: size }}});
-      dispatch({ type: 'SET_HINTS', payload: { xHints: Array.from({length: size}), yHints: Array.from({length: size}) } });
+      dispatch({ type: "INIT", payload: { size: { x: initSize, y: initSize }}});
+      dispatch({ type: 'SET_HINTS', payload: { xHints: Array.from({length: initSize}), yHints: Array.from({length: initSize}) } });
       return;
     }
     const hint = location.search.replace('?hint=', '');
@@ -70,10 +70,14 @@ const PixelTablePage = () => {
 
   return (
     <Wrapper>
-      <PixelTable size={size} />
-      <button onClick={createHints}>create hints</button>
-      <button onClick={createStringHints}>create string hints</button>
-      <button onClick={changeMode}>change mode</button>
+      {table && hints && (
+        <>
+          <Table size={size.x} xHints={hints.x} yHints={hints.y} />
+          <button onClick={createHints}>create hints</button>
+          <button onClick={createStringHints}>create string hints</button>
+          <button onClick={changeMode}>change mode</button>
+        </>
+      )}
     </Wrapper>
   );
 };

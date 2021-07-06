@@ -2,6 +2,7 @@ const initialState = {
   size: null,
   table: null,
   hints: { x: null, y: null },
+  mode: 'click',
 };
 
 const pixelTableReducer = (state = initialState, action) => {
@@ -11,6 +12,7 @@ const pixelTableReducer = (state = initialState, action) => {
       return {
         size: { x, y },
         table: Array.from({length: x}).map((v) => Array.from({length: y}).map(() => 'white')),
+        mode: 'click',
       };
     }
     case 'SET_PIXEL': {
@@ -28,6 +30,13 @@ const pixelTableReducer = (state = initialState, action) => {
           y: yHints.map((hint) => (hint || []).concat(Array.from({length: Math.ceil(state.size.x / 2) - (hint ? hint.length : 0) }))),
         },
       };
+    }
+    case 'SET_MODE': {
+      const { mode } = action.payload;
+      return {
+        ...state,
+        mode,
+      }
     }
     default:
       return state;

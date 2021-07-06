@@ -4,11 +4,11 @@ import styled, { css } from 'styled-components';
 import Pixel from '../Pixel';
 
 const Cell = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
   border: 1px solid black;
   border-collapse: collapse;
-  // font-size: 6px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,11 +29,11 @@ const StyledTable = styled.table`
 `;
 
 const Index = styled.th`
-  // font-size: 4px;
+  font-size: 4px;
 `;
 
 const Table = ({size, xHints, yHints}) => {
-  const { table } = useSelector((state) => state);
+  const { table, mode } = useSelector((state) => state);
   const getIndexArray = (s) => s ? Array.from({length: s}, (_, index) => index) : [];
   const array = getIndexArray(size);
   
@@ -78,7 +78,7 @@ const Table = ({size, xHints, yHints}) => {
                 return (
                   <td key={y}>
                     <Cell>
-                      <Pixel x={x} y={y} status={table && table[x][y]}/>
+                      <Pixel x={x} y={y} status={table && table[x][y]} mode={mode}/>
                     </Cell>
                   </td>
                 );

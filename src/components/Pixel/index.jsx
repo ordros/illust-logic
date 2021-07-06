@@ -23,25 +23,30 @@ const WhiteCell = styled.div`
 `;
 
 const CheckedCell = styled.div`
+  background: white;
   background-image: linear-gradient(-45deg,
-    transparent 49%,
-    black 49%,
-    black 51%,
-    transparent 51%, 
+    transparent 48%,
+    black 48%,
+    black 52%,
+    transparent 52%, 
     transparent),
   linear-gradient(45deg, /*角度*/
-    transparent 49%,
-    black 49%, /*斜線の色*/
-    black 51%, /*斜線の色*/
-    transparent 51%, 
+    transparent 48%,
+    black 48%, /*斜線の色*/
+    black 52%, /*斜線の色*/
+    transparent 52%, 
     transparent);
   width: 100%;
   height: 100%;
 `;
 
-const Pixel = ({ status, x, y }) => {
+const Pixel = ({ status, x, y, mode }) => {
   const dispatch = useDispatch();
   const onClick = () => {
+    if (mode === 'fill') {
+      dispatch({ type: 'SET_PIXEL', payload: { position: { x, y }, cellState: 'white' } });
+      return;
+    }
     switch(status) {
       case 'white':
         dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'black'} });
@@ -53,6 +58,13 @@ const Pixel = ({ status, x, y }) => {
       default:
         dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'white'} });
     }
+  };
+  const onMouseHover = () => {
+    if (mode === 'click') {
+      return;
+    }
+    dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'black'} });
+    return;
   };
 
   const getCell = (status) => {
@@ -68,7 +80,7 @@ const Pixel = ({ status, x, y }) => {
   }
 
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper onClick={onClick} onMouseEnter={onMouseHover}>
       {getCell(status)}
     </Wrapper>
   );

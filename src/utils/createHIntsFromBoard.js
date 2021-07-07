@@ -13,7 +13,8 @@ const createHintFromLine = (line) => {
       }
     }
   });
-  return hints;    
+  line.pop();
+  return hints.concat(Array.from({length: (line.length/2) - hints.length}));
 };
 
 const createHintsFromBoard = (table) => {

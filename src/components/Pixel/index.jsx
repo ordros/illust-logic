@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -41,30 +41,33 @@ const CheckedCell = styled.div`
   height: 100%;
 `;
 
-const Pixel = ({ status, x, y, mode }) => {
+const Pixel = ({ status, x, y, onClickPixel }) => {
   const dispatch = useDispatch();
   const onClick = () => {
-    if (mode === 'fill') {
-      dispatch({ type: 'SET_PIXEL', payload: { position: { x, y }, cellState: 'white' } });
-      return;
-    }
+    let cellState = '';
     switch(status) {
       case 'white':
-        dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'black'} });
-        return;
+        cellState = 'black';
+        break;
       case 'black':
-        dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'checked'} });
-        return;
+        cellState = 'checked';
+        break;
       case 'checked':
       default:
-        dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'white'} });
+        cellState = 'white';
     }
+    dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState } });
+    
+    onClickPixel();
   };
-  const onMouseHover = () => {
-    if (mode === 'click') {
+  const onMouseHover = (e) => {
+    // hover時に左クリックしていないなら何もしない
+    if (e.buttons !== 1 ) {
       return;
     }
     dispatch({ type: "SET_PIXEL", payload: { position:{ x, y }, cellState: 'black'} });
+    
+    onClickPixel();
     return;
   };
 

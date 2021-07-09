@@ -12,7 +12,7 @@ const pixelTableReducer = (state = initialState, action) => {
       return {
         size: { x, y },
         table: Array.from({length: x}).map((v) => Array.from({length: y}).map(() => 'white')),
-        // mode: 'create',
+        mode: 'create',
       };
     }
     case 'SET_PIXEL': {

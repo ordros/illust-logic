@@ -1,6 +1,5 @@
 const createHintFromLine = (line) => {
   const hints = [];
-  // const binaryline = 
   let cnt = 0;
   line.push("padding");
   line.map((c) => c === 'black' ? "1" : "0").forEach((c, index) => {

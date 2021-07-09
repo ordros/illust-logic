@@ -2,7 +2,6 @@ import './App.css';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux'
 import pixelTableReducer from './reducers/pixelTableReducer';
-import PixelTable from './components/PixelTable';
 import { BrowserRouter, Route } from 'react-router-dom';
 import EditQuestionPage from './components/EditQuestionPage';
 import SolveQuestionPage from './components/SolveQuestionPage';

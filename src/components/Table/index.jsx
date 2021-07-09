@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled, { css } from 'styled-components';
-import createHintsFromBoard from '../../utils/createHintsFromBoard';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import Pixel from '../Pixel';
 
 const Cell = styled.div`
@@ -19,7 +18,6 @@ const StyledTable = styled.table`
   width: 50px;
   height: 50px;
   
-  // border: 1px solid black;
   border-spacing: 0;
   border-collapse: collapse;
   td {

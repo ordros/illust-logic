@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import styled from "styled-components";
 import createHintsFromBoard from "../../utils/createHintsFromBoard";
-import createStringFromHint from "../../utils/createStringFromHint";
 import getHintsFromString from "../../utils/getHintsFromString";
 import PixelTable from "../PixelTable";
 import querystring from 'querystring';
@@ -37,7 +36,6 @@ const SolveQuestionPage = () => {
       return;
     }
     const hint = querystring.parse(location.search).hint;
-    // const hint = location.search.replace('?hint=', '');
     if (!hint) {
       return;
     }
@@ -93,9 +91,7 @@ const SolveQuestionPage = () => {
   };
 
   useEffect(() => {
-    // if (!table) {
-      setInitalData();
-    // }
+    setInitalData();
   }, []);
 
   return (

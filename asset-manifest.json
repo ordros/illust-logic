@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/illust-logic/static/css/main.c6f920d7.chunk.css",
-    "main.js": "/illust-logic/static/js/main.88dc9287.chunk.js",
-    "main.js.map": "/illust-logic/static/js/main.88dc9287.chunk.js.map",
+    "main.js": "/illust-logic/static/js/main.fccdbfae.chunk.js",
+    "main.js.map": "/illust-logic/static/js/main.fccdbfae.chunk.js.map",
     "runtime-main.js": "/illust-logic/static/js/runtime-main.83c7e14c.js",
     "runtime-main.js.map": "/illust-logic/static/js/runtime-main.83c7e14c.js.map",
     "static/js/2.7e48d625.chunk.js": "/illust-logic/static/js/2.7e48d625.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.83c7e14c.js",
     "static/js/2.7e48d625.chunk.js",
     "static/css/main.c6f920d7.chunk.css",
-    "static/js/main.88dc9287.chunk.js"
+    "static/js/main.fccdbfae.chunk.js"
   ]
 }

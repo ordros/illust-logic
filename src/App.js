@@ -6,6 +6,7 @@ import PixelTable from './components/PixelTable';
 import { BrowserRouter, Route } from 'react-router-dom';
 import EditQuestionPage from './components/EditQuestionPage';
 import SolveQuestionPage from './components/SolveQuestionPage';
+import StaticRoutePage from './components/StaticRoutePage';
 
 function App() {
   const store = createStore(pixelTableReducer);
@@ -14,6 +15,7 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <BrowserRouter>
+          <Route path="/" component={StaticRoutePage} />
           <Route path="/create" component={EditQuestionPage} />
           <Route path="/solve" component={SolveQuestionPage} />
         </BrowserRouter>

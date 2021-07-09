@@ -6,7 +6,19 @@ import createHintsFromBoard from "../../utils/createHintsFromBoard";
 import createStringFromHint from "../../utils/createStringFromHint";
 import getHintsFromString from "../../utils/getHintsFromString";
 import PixelTable from "../PixelTable";
+import querystring from 'querystring';
 
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Message = styled.p`
+  font-size: 40px;
+  font-weight: bold;
+  color: red;
+`;
 
 const SolveQuestionPage = () => {
   const { size, table, hints } = useSelector((state) => state);
@@ -14,15 +26,21 @@ const SolveQuestionPage = () => {
   const location = useLocation();
 
   const [solved, setSolved] = useState(false);
+  const [hintValue, setHintValue] = useState(null);
 
   const setInitalData = () => {
     const initSize = 10;
+    dispatch({ type: 'SET_MODE', payload: { mode: 'solve' }});
     if (!location.search) {
       dispatch({ type: "INIT", payload: { size: { x: initSize, y: initSize }}});
       dispatch({ type: 'SET_HINTS', payload: { xHints: Array.from({length: initSize}), yHints: Array.from({length: initSize}) } });
       return;
     }
-    const hint = location.search.replace('?hint=', '');
+    const hint = querystring.parse(location.search).hint;
+    // const hint = location.search.replace('?hint=', '');
+    if (!hint) {
+      return;
+    }
     const {
       sizeX,
       sizeY,
@@ -55,17 +73,38 @@ const SolveQuestionPage = () => {
     }
   }
 
-  useEffect(() => {
-    if (!table) {
-      setInitalData();
+  const onChangeHint = (e) => {
+    if (!e.target.value) {
+      return;
     }
-  });
+    setHintValue(e.target.value);
+  };
+
+  const onSetHint = () => {
+    const {
+      sizeX,
+      sizeY,
+      hintsX,
+      hintsY,
+    } = getHintsFromString(hintValue);
+
+    dispatch({ type: "INIT", payload: { size: { x: sizeX, y: sizeY }}});
+    dispatch({ type: 'SET_HINTS', payload: { xHints: hintsX, yHints: hintsY } });
+  };
+
+  useEffect(() => {
+    // if (!table) {
+      setInitalData();
+    // }
+  }, []);
 
   return (
-    <>
+    <Wrapper>
       <PixelTable size={size} table={table} hints={hints} onClickPixel={checkSolved}/>
-      {solved && 'Solved!'}
-    </>
+      {/* <input onChange={onChangeHint} />
+      <button onClick={onSetHint}>Set</button> */}
+      <Message>{solved && 'Solved!'}</Message>
+    </Wrapper>
   );
 };
 

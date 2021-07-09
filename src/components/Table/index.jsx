@@ -56,6 +56,7 @@ const Table = ({size, table, xHints, yHints, onClickPixel}) => {
   const yHintMaxLength = yHints && yHints.reduce((a,b) => Math.max(a.length || a, b.length || b));
   const maxHintsLength = Math.max(xHintMaxLength, yHintMaxLength);
 
+  const { mode } = useSelector((state) => state);
   return (
     <StyledTable cellSpacing='0'>
       <thead>
@@ -94,7 +95,7 @@ const Table = ({size, table, xHints, yHints, onClickPixel}) => {
                 return (
                   <td key={y}>
                     <Cell>
-                      <Pixel x={x} y={y} status={table && table[x][y]} onClickPixel={onClickPixel}/>
+                      <Pixel x={x} y={y} status={table && table[x][y]} onClickPixel={onClickPixel} mode={mode}/>
                     </Cell>
                   </td>
                 );

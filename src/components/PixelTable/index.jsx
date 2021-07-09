@@ -13,17 +13,6 @@ const Wrapper = styled.div`
 `;
 
 const PixelTable = ({ size, table, hints, onClickPixel }) => {
-  // const changeMode = () => {
-  //   switch (mode) {
-  //     case 'fill':
-  //       dispatch({ type: 'SET_MODE', payload: { mode: 'click' }});
-  //       return;
-  //     case 'click':
-  //       dispatch({ type: 'SET_MODE', payload: { mode: 'fill' }});
-  //       return;
-  //   }
-  // }
-
   return (
     <Wrapper>
       {table && hints && (

@@ -2,7 +2,7 @@ const initialState = {
   size: null,
   table: null,
   hints: { x: null, y: null },
-  mode: 'click',
+  mode: 'create',
 };
 
 const pixelTableReducer = (state = initialState, action) => {
@@ -12,7 +12,7 @@ const pixelTableReducer = (state = initialState, action) => {
       return {
         size: { x, y },
         table: Array.from({length: x}).map((v) => Array.from({length: y}).map(() => 'white')),
-        mode: 'click',
+        // mode: 'create',
       };
     }
     case 'SET_PIXEL': {

@@ -41,7 +41,7 @@ const CheckedCell = styled.div`
   height: 100%;
 `;
 
-const Pixel = ({ status, x, y, onClickPixel }) => {
+const Pixel = ({ status, x, y, mode, onClickPixel }) => {
   const dispatch = useDispatch();
   const onClick = () => {
     let cellState = '';
@@ -50,7 +50,11 @@ const Pixel = ({ status, x, y, onClickPixel }) => {
         cellState = 'black';
         break;
       case 'black':
-        cellState = 'checked';
+        if (mode === 'solve') {
+          cellState = 'checked';
+        } else {
+          cellState = 'white';
+        }
         break;
       case 'checked':
       default:

@@ -5,6 +5,15 @@ import createHintsFromBoard from "../../utils/createHintsFromBoard";
 import createStringFromHint from "../../utils/createStringFromHint";
 import PixelTable from "../PixelTable";
 
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Message = styled.div`
+  display: flex;
+`
 
 const EditQuestionPage = () => {
   const { size, table, hints } = useSelector((state) => state);
@@ -16,15 +25,15 @@ const EditQuestionPage = () => {
     const initSize = 10;
     dispatch({ type: "INIT", payload: { size: { x: initSize, y: initSize }}});
     dispatch({ type: 'SET_HINTS', payload: { xHints: Array.from({length: initSize}), yHints: Array.from({length: initSize}) } });
-    return;
+    dispatch({ type: 'SET_MODE', payload: { mode: 'create' }});
   }
 
   const createStringHints = () => {
     const xStringHint = createStringFromHint(hints.x);
     const yStringHint = createStringFromHint(hints.y);
-    const hintString = `${size.x}/${size.y}/${xStringHint}/${yStringHint}`;
+    const hintString = `${size.x}_${size.y}_${xStringHint}_${yStringHint}`;
 
-    setQuestionUrl(`/solve?hint=${hintString}`);
+    setQuestionUrl(`?type=solve&hint=${hintString}`);
   };
 
   const setTableSize = (size) => {
@@ -55,11 +64,16 @@ const EditQuestionPage = () => {
   }, [hints]);
 
   return (
-    <>
+    <Wrapper>
       <PixelTable size={size} table={table} hints={hints} onClickPixel={createHints}/>
-      table size(max size is 20): <input type="text" onChange={(e) => setTableSize(e.target.value)} max={30}/>
-      Let's solve: <a href={questionUrl}>{questionUrl && 'here'}</a>
-    </>
+      <Message>
+        table size(max size is 20): <input type="text" onChange={(e) => setTableSize(e.target.value)} max={30}/>
+      </Message>
+      <Message>
+        Let's solve: <a href={questionUrl} target="_blank">{questionUrl && 'here'}</a>
+      </Message>
+      <button onClick={setInitalData}>Reset!</button>
+    </Wrapper>
   );
 };
 

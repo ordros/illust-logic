@@ -2,7 +2,8 @@ import zlib from 'zlib';
 
 const getHintFromString = (strHint, size) => {
   const deflated = Buffer.from(strHint, 'base64');
-  const hintFlatted = JSON.parse(zlib.inflateRawSync(deflated).toString()).map((v) => v === 0 ? null : v);
+  const inflated = zlib.inflateRawSync(deflated).toString();
+  const hintFlatted = JSON.parse(decodeURI(inflated)).map((v) => v === 0 ? null : v);
 
   const hints = [];
   for (let i = 0; i < size; i++) {
@@ -14,7 +15,7 @@ const getHintFromString = (strHint, size) => {
 }
 
 const getHintsFromString = (str) => {
-  const arr = str.split('/');
+  const arr = str.split('_');
   const sizeX = parseInt(arr[0]);
   const sizeY = parseInt(arr[1]);
   const hintsX = getHintFromString(arr[2], sizeX);

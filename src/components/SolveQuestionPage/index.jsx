@@ -98,6 +98,11 @@ const SolveQuestionPage = () => {
     setHintValue(e.target.value);
   };
 
+  const onClickPixel = () => {
+    checkHintStatus();
+    checkSolved();
+  };
+
   const onSetHint = () => {
     const {
       sizeX,
@@ -116,7 +121,7 @@ const SolveQuestionPage = () => {
 
   return (
     <Wrapper>
-      <PixelTable size={size} table={table} hints={hints} mode='solve' onClickPixel={checkHintStatus}/>
+      <PixelTable size={size} table={table} hints={hints} mode='solve' onClickPixel={onClickPixel}/>
       {/* <input onChange={onChangeHint} />
       <button onClick={onSetHint}>Set</button> */}
       <Message>{solved && 'Solved!'}</Message>

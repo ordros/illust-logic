@@ -15,7 +15,7 @@ const Message = styled.div`
   display: flex;
 `
 
-const EditQuestionPage = () => {
+const EditQuestionPage = ({ fromStaticPage = false }) => {
   const { size, table, hints } = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -32,8 +32,11 @@ const EditQuestionPage = () => {
     const xStringHint = createStringFromHint(hints.x);
     const yStringHint = createStringFromHint(hints.y);
     const hintString = `${size.x}_${size.y}_${xStringHint}_${yStringHint}`;
-
-    setQuestionUrl(`/solve?type=solve&hint=${hintString}`);
+    if (fromStaticPage) {
+      setQuestionUrl(`?type=solve&hint=${hintString}`);
+    } else {
+      setQuestionUrl(`/solve?type=solve&hint=${hintString}`);
+    }
   };
 
   const setTableSize = (size) => {

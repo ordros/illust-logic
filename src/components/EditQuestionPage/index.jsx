@@ -33,7 +33,7 @@ const EditQuestionPage = () => {
     const yStringHint = createStringFromHint(hints.y);
     const hintString = `${size.x}_${size.y}_${xStringHint}_${yStringHint}`;
 
-    setQuestionUrl(`?type=solve&hint=${hintString}`);
+    setQuestionUrl(`/solve?type=solve&hint=${hintString}`);
   };
 
   const setTableSize = (size) => {
@@ -65,7 +65,7 @@ const EditQuestionPage = () => {
 
   return (
     <Wrapper>
-      <PixelTable size={size} table={table} hints={hints} onClickPixel={createHints}/>
+      <PixelTable size={size} table={table} hints={hints} mode='create' onClickPixel={createHints}/>
       <Message>
         table size(max size is 20): <input type="text" onChange={(e) => setTableSize(e.target.value)} max={30}/>
       </Message>

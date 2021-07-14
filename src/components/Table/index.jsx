@@ -33,6 +33,7 @@ const FrameBorder = styled.div`
   align-items: center;
   justify-content: center;
   border: 1px solid black;
+  ${(props) => props.isMatched ? 'background: #ffa500' : ''}; 
   border-collapse: collapse;
 `;
 
@@ -46,7 +47,7 @@ const Spacer = styled.div`
   height: 20px;
 `;
 
-const Table = ({size, table, xHints, yHints, onClickPixel}) => {
+const Table = ({size, table, xHints, yHints, hints, mode, onClickPixel}) => {
   const getIndexArray = (s) => s ? Array.from({length: s}, (_, index) => index) : [];
   const array = getIndexArray(size);
   
@@ -54,7 +55,9 @@ const Table = ({size, table, xHints, yHints, onClickPixel}) => {
   const yHintMaxLength = yHints && yHints.reduce((a,b) => Math.max(a.length || a, b.length || b));
   const maxHintsLength = Math.max(xHintMaxLength, yHintMaxLength);
 
-  const { mode } = useSelector((state) => state);
+  const xHintStatus = hints.xStatus;
+  const yHintStatus = hints.yStatus;
+
   return (
     <StyledTable cellSpacing='0'>
       <thead>
@@ -70,8 +73,8 @@ const Table = ({size, table, xHints, yHints, onClickPixel}) => {
             return (
               <tr key={yHintX}>
                 <Index as="td" />
-                {getIndexArray(xHintMaxLength).map((v) => <td key={v}>{<Cell><FrameBorder/></Cell> }</td>)}
-                {getIndexArray(size).map((yHinty) => <td key={yHinty}><Cell><FrameBorder>{yHints[yHinty][yHintX] || ''}</FrameBorder></Cell></td>)}
+                {getIndexArray(xHintMaxLength).map((v) => <td key={v}>{<Cell><FrameBorder /></Cell> }</td>)}
+                {getIndexArray(size).map((yHinty) => <td key={yHinty}><Cell><FrameBorder isMatched={yHintStatus && yHintStatus[yHinty][yHintX]}>{yHints[yHinty][yHintX] || ''}</FrameBorder></Cell></td>)}
               </tr>
             );
           })
@@ -84,7 +87,7 @@ const Table = ({size, table, xHints, yHints, onClickPixel}) => {
                 getIndexArray(xHintMaxLength).map((xHintx) => {
                   return (
                     <td key={xHintx}>
-                      <Cell><FrameBorder>{xHints[x][xHintx] || ''}</FrameBorder></Cell>
+                      <Cell><FrameBorder isMatched={xHintStatus && xHintStatus[x][xHintx]}>{xHints[x][xHintx] || ''}</FrameBorder></Cell>
                     </td>
                   );
                 })

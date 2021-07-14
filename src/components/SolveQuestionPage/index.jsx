@@ -61,6 +61,18 @@ const SolveQuestionPage = () => {
     return true;
   };
  
+  const createHintStatus = (hints, currentHints) => {
+    const hintStatus = [];
+    for (let i = 0; i < hints.length; i++) {
+      const line = [];
+      for (let j = 0; j < hints[0].length; j++) {
+        line.push(hints[i][j] === currentHints[i][j]);
+      }
+      hintStatus.push(line);
+    }
+    return hintStatus;
+  };
+
   const checkSolved = () => {
     const current = createHintsFromBoard(table);
     
@@ -70,6 +82,14 @@ const SolveQuestionPage = () => {
       setSolved(false);
     }
   }
+
+  const checkHintStatus = () => {
+    const current = createHintsFromBoard(table);
+    const xHintStatus = createHintStatus(hints.x, current.xHints);
+    const yHintStatus = createHintStatus(hints.y, current.yHints);
+
+    dispatch({ type: 'SET_HINTS_STATUS', payload: { xHintStatus, yHintStatus }});
+  };
 
   const onChangeHint = (e) => {
     if (!e.target.value) {
@@ -96,7 +116,7 @@ const SolveQuestionPage = () => {
 
   return (
     <Wrapper>
-      <PixelTable size={size} table={table} hints={hints} onClickPixel={checkSolved}/>
+      <PixelTable size={size} table={table} hints={hints} mode='solve' onClickPixel={checkHintStatus}/>
       {/* <input onChange={onChangeHint} />
       <button onClick={onSetHint}>Set</button> */}
       <Message>{solved && 'Solved!'}</Message>
